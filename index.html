@@ -46,7 +46,7 @@
 
       <section class="page active" id="page-dashboard">
         <div class="welcome-row">
-          <div><p class="eyebrow">الثلاثاء · مساحة إنجازك</p><h1>أهلًا بك، <span class="gradient-text">حان وقت الإنجاز</span> 👋</h1><p class="muted">رتّب أولوياتك، وخلّي كل جلسة مذاكرة تقرّبك من هدفك.</p></div>
+          <div><p class="eyebrow" id="greetingDay">مساحة إنجازك</p><h1>أهلًا بك، <span class="gradient-text">حان وقت الإنجاز</span> 👋</h1><p class="muted">رتّب أولوياتك، وخلّي كل جلسة مذاكرة تقرّبك من هدفك.</p></div>
           <button class="primary-btn" data-goto="planner">＋ خطط ليومي</button>
         </div>
         <div class="stats-grid">
@@ -61,7 +61,7 @@
             <div id="upcomingTasks" class="task-list empty-state">لا توجد مهام بعد. أضف أول مهمة وابدأ رحلتك.</div>
           </article>
           <article class="panel focus-panel">
-            <div class="panel-heading"><div><h2>جلسة تركيز</h2><p>25 دقيقة من التركيز تصنع فرقًا.</p></div><span class="live-dot">● جاهز</span></div>
+            <div class="panel-heading"><div><h2>جلسة تركيز</h2><p>25 دقيقة من التركيز تصنع فرقًا.</p></div><span class="live-dot" id="timerStatus">● جاهز</span></div>
             <div class="timer-ring"><div class="timer-inner"><strong id="timerDisplay">25:00</strong><small id="timerMode">وقت التركيز</small></div></div>
             <div class="timer-controls"><button class="primary-btn" id="timerStart">ابدأ</button><button class="secondary-btn" id="timerReset">إعادة</button></div>
             <div class="timer-presets"><button class="preset active" data-minutes="25">25 دقيقة</button><button class="preset" data-minutes="50">50 دقيقة</button><button class="preset" data-minutes="5" data-break="true">استراحة</button></div>
