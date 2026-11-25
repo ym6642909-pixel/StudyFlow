@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101827">
+  <meta name="description" content="StudyFlow — مساحة ذكية لتنظيم وقتك ومذاكرتك ومحاضراتك.">
+  <title>StudyFlow | مساحة دراستك الذكية</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" defer></script>
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#" aria-label="StudyFlow الرئيسية">
+        <span class="brand-mark">S</span><span>Study<span class="brand-accent">Flow</span></span>
+      </a>
+      <div class="profile-mini">
+        <div class="avatar">ط</div>
+        <div><strong>مساحة الطالب</strong><small>ابدأ يومًا منتجًا ✨</small></div>
+      </div>
+      <p class="nav-caption">القائمة الرئيسية</p>
+      <nav class="main-nav" aria-label="القائمة الرئيسية">
+        <button class="nav-link active" data-page="dashboard"><span>⌂</span> لوحة التحكم</button>
+        <button class="nav-link" data-page="planner"><span>▦</span> تنظيم الوقت</button>
+        <button class="nav-link" data-page="tasks"><span>✓</span> المهام الدراسية</button>
+        <button class="nav-link" data-page="library"><span>▤</span> مكتبة المحاضرات</button>
+        <button class="nav-link" data-page="assistant"><span>✧</span> مساعد StudyFlow <em>AI</em></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="side-tip"><span class="tip-icon">✦</span><strong>خطوة صغيرة كل يوم</strong><p>الاستمرارية أهم من المثالية. خطط ليومك وابدأ.</p></div>
+        <button class="nav-link" data-page="settings"><span>⚙</span> الإعدادات</button>
+        <small class="version">StudyFlow · الإصدار 1.0</small>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <button class="mobile-menu icon-btn" id="menuToggle" aria-label="فتح القائمة">☰</button>
+        <div class="breadcrumb"><span>مساحة الدراسة</span><b>/</b><strong id="pageName">لوحة التحكم</strong></div>
+        <div class="top-actions"><span class="today-label" id="todayLabel"></span><button class="icon-btn" id="quickAdd" title="إضافة مهمة">＋</button><div class="top-avatar">ط</div></div>
+      </header>
+
+      <section class="page active" id="page-dashboard">
+        <div class="welcome-row">
+          <div><p class="eyebrow">الثلاثاء · مساحة إنجازك</p><h1>أهلًا بك، <span class="gradient-text">حان وقت الإنجاز</span> 👋</h1><p class="muted">رتّب أولوياتك، وخلّي كل جلسة مذاكرة تقرّبك من هدفك.</p></div>
+          <button class="primary-btn" data-goto="planner">＋ خطط ليومي</button>
+        </div>
+        <div class="stats-grid">
+          <article class="stat-card"><div class="stat-top"><span>مهام اليوم</span><span class="stat-icon purple">✓</span></div><strong id="statTasks">0</strong><small>مهمة مكتملة أو قيد التنفيذ</small></article>
+          <article class="stat-card"><div class="stat-top"><span>وقت التركيز</span><span class="stat-icon blue">◷</span></div><strong id="statFocus">0 <i>د</i></strong><small>إجمالي جلسات التركيز المسجلة</small></article>
+          <article class="stat-card"><div class="stat-top"><span>المحاضرات</span><span class="stat-icon green">▤</span></div><strong id="statFiles">0</strong><small>ملف في مكتبتك الدراسية</small></article>
+          <article class="stat-card"><div class="stat-top"><span>إنجاز الأسبوع</span><span class="stat-icon orange">↗</span></div><strong id="statProgress">0%</strong><small>نسبة المهام التي أنجزتها</small></article>
+        </div>
+        <div class="dashboard-grid">
+          <article class="panel schedule-panel">
+            <div class="panel-heading"><div><h2>مهامك القادمة</h2><p>ابدأ بالأهم، والباقي سيأتي تباعًا.</p></div><button class="text-btn" data-goto="tasks">عرض الكل ←</button></div>
+            <div id="upcomingTasks" class="task-list empty-state">لا توجد مهام بعد. أضف أول مهمة وابدأ رحلتك.</div>
+          </article>
+          <article class="panel focus-panel">
+            <div class="panel-heading"><div><h2>جلسة تركيز</h2><p>25 دقيقة من التركيز تصنع فرقًا.</p></div><span class="live-dot">● جاهز</span></div>
+            <div class="timer-ring"><div class="timer-inner"><strong id="timerDisplay">25:00</strong><small id="timerMode">وقت التركيز</small></div></div>
+            <div class="timer-controls"><button class="primary-btn" id="timerStart">ابدأ</button><button class="secondary-btn" id="timerReset">إعادة</button></div>
+            <div class="timer-presets"><button class="preset active" data-minutes="25">25 دقيقة</button><button class="preset" data-minutes="50">50 دقيقة</button><button class="preset" data-minutes="5" data-break="true">استراحة</button></div>
+          </article>
+          <article class="panel week-panel">
+            <div class="panel-heading"><div><h2>نظرة على أسبوعك</h2><p>تابع تقدمك يومًا بيوم.</p></div><span class="muted small">آخر 7 أيام</span></div>
+            <div class="week-bars" id="weekBars"></div>
+          </article>
+          <article class="panel quote-panel"><div class="quote-mark">“</div><h2>لا تنتظر أن تكون مستعدًا تمامًا.</h2><p>ابدأ بما لديك، ومن حيث أنت، وستتعلم الطريق أثناء السير.</p><span>— تذكير StudyFlow</span></article>
+        </div>
+      </section>
+
+      <section class="page" id="page-planner">
+        <div class="page-heading"><div><p class="eyebrow">خطّط بذكاء</p><h1>تنظيم الوقت</h1><p class="muted">حوّل أهدافك إلى خطوات واضحة ومواعيد قابلة للتنفيذ.</p></div><button class="primary-btn" id="plannerAdd">＋ إضافة مهمة</button></div>
+        <div class="panel planner-panel"><div class="panel-heading"><div><h2>جدول المهام</h2><p>كل ما تحتاج إنجازه في مكان واحد.</p></div><input class="date-filter" type="date" id="plannerDate"></div><div id="plannerTasks" class="task-list empty-state">لا توجد مهام لهذا اليوم.</div></div>
+        <div class="panel pomodoro-info"><div class="info-icon">◷</div><div><h3>تقنية بومودورو</h3><p>ذاكر لمدة 25 دقيقة بتركيز، ثم خذ استراحة قصيرة. كرر الدورة لتحافظ على نشاطك.</p></div></div>
+      </section>
+
+      <section class="page" id="page-tasks">
+        <div class="page-heading"><div><p class="eyebrow">قائمة إنجازاتك</p><h1>المهام الدراسية</h1><p class="muted">أضف مهامك، حدد أولوياتك، وتابع تقدمك.</p></div><button class="primary-btn" id="taskAdd">＋ مهمة جديدة</button></div>
+        <div class="filter-row"><button class="filter-chip active" data-filter="all">الكل</button><button class="filter-chip" data-filter="pending">قيد التنفيذ</button><button class="filter-chip" data-filter="done">مكتملة</button></div>
+        <div class="panel"><div id="allTasks" class="task-list empty-state">قائمتك فارغة حاليًا.</div></div>
+      </section>
+
+      <section class="page" id="page-library">
+        <div class="page-heading"><div><p class="eyebrow">كل محاضراتك في مكان واحد</p><h1>مكتبة المحاضرات</h1><p class="muted">ارفع ملفات PDF واستخرج النصوص لتلخيصها ومراجعتها.</p></div><label class="primary-btn upload-btn">＋ رفع ملف PDF<input type="file" id="pdfUpload" accept="application/pdf" hidden></label></div>
+        <div class="upload-zone" id="dropZone"><div class="upload-symbol">⇧</div><strong>اسحب ملف PDF وأفلته هنا</strong><span>أو اختر ملفًا من جهازك · الحد يعتمد على مساحة المتصفح المتاحة</span></div>
+        <div class="library-layout"><div class="panel"><div class="panel-heading"><div><h2>ملفاتك</h2><p>المحاضرات التي أضفتها</p></div><span class="count-pill" id="fileCount">0 ملف</span></div><div id="fileList" class="file-list empty-state">لم تضف أي ملفات بعد.</div></div><div class="panel reader-panel"><div class="panel-heading"><div><h2 id="readerTitle">قارئ المحاضرات</h2><p>اختر ملفًا لعرض محتواه النصي.</p></div></div><div id="pdfText" class="pdf-text empty-state">سيظهر النص المستخرج من ملف PDF هنا.</div><div class="reader-actions"><button class="secondary-btn" id="sendToAI" disabled>✧ تلخيص هذه المحاضرة</button><button class="text-btn" id="copyPdfText" disabled>نسخ النص</button></div></div></div>
+      </section>
+
+      <section class="page" id="page-assistant">
+        <div class="page-heading"><div><p class="eyebrow">رفيق مذاكرتك</p><h1>مساعد StudyFlow <span class="ai-pill">AI</span></h1><p class="muted">لخّص، افهم، واختبر نفسك — بمساعدة الذكاء الاصطناعي.</p></div></div>
+        <div class="assistant-layout">
+          <div class="panel chat-panel"><div class="chat-header"><div class="assistant-avatar">✧</div><div><strong>المساعد الدراسي</strong><small><span class="live-dot">●</span> جاهز لمساعدتك</small></div><button class="text-btn" id="clearChat">محادثة جديدة</button></div>
+            <div class="chat-messages" id="chatMessages"><div class="chat-bubble assistant"><strong>أهلًا بك في StudyFlow! 👋</strong><p>أقدر أساعدك في تلخيص المحاضرات، تبسيط المفاهيم، أو إنشاء أسئلة للمراجعة. اكتب طلبك أو اختر أحد الاقتراحات.</p></div></div>
+            <div class="suggestions"><button data-prompt="لخّص النص التالي في نقاط واضحة: ">تلخيص بنقاط</button><button data-prompt="اشرح لي هذا الموضوع بطريقة بسيطة مع أمثلة: ">شرح مبسط</button><button data-prompt="أنشئ 5 أسئلة اختيار من متعدد مع الإجابات عن: ">إنشاء اختبار</button></div>
+            <form id="chatForm" class="chat-input"><textarea id="chatInput" rows="1" placeholder="اكتب سؤالك أو الصق نص المحاضرة هنا..." required></textarea><button class="send-btn" aria-label="إرسال">➤</button></form>
+          </div>
+          <aside class="panel ai-side"><h3>أدوات سريعة</h3><button class="tool-card" data-prompt="لخّص النص التالي في نقاط رئيسية، ثم اذكر أهم المصطلحات: "><span>▤</span><div><strong>تلخيص محاضرة</strong><small>النقاط والأفكار الأساسية</small></div>›</button><button class="tool-card" data-prompt="اشرح المحتوى التالي خطوة بخطوة بلغة بسيطة: "><span>✧</span><div><strong>شرح درس</strong><small>فهم المفاهيم الصعبة</small></div>›</button><button class="tool-card" data-prompt="أنشئ اختبارًا من 5 أسئلة اختيار من متعدد، وأخفِ الإجابات حتى أجيب: "><span>✓</span><div><strong>اختبر معلوماتك</strong><small>أسئلة للمراجعة والتثبيت</small></div>›</button><div class="api-note"><strong>ملاحظة الإعداد</strong><p>يمكن تشغيل المساعد محليًا بوضع تجريبي، أو ربطه بمزود AI من صفحة الإعدادات باستخدام مفتاح API خاص بك.</p><button class="text-btn" data-goto="settings">إعداد الاتصال ←</button></div></aside>
+        </div>
+      </section>
+
+      <section class="page" id="page-settings">
+        <div class="page-heading"><div><p class="eyebrow">تحكم في تجربتك</p><h1>الإعدادات</h1><p class="muted">خصص StudyFlow واربط خدمة الذكاء الاصطناعي الخاصة بك.</p></div></div>
+        <div class="settings-grid"><div class="panel settings-card"><h2>إعدادات الذكاء الاصطناعي</h2><p class="muted">أدخل عنوان API متوافقًا مع OpenAI ومفتاحك. يتم حفظهما محليًا في هذا المتصفح فقط.</p><label>عنوان API (Base URL)<input id="apiUrl" type="url" placeholder="https://api.openai.com/v1"></label><label>اسم النموذج<input id="apiModel" type="text" placeholder="gpt-4o-mini"></label><label>مفتاح API<input id="apiKey" type="password" placeholder="ضع مفتاح API هنا"></label><div class="warning-note">لا تضع مفتاح API في نسخة منشورة للعامة أو داخل كود الواجهة في مشروع جماعي. للاستخدام الإنتاجي، استخدم خادمًا وسيطًا يحمي المفتاح.</div><button class="primary-btn" id="saveSettings">حفظ الإعدادات</button><span class="save-status" id="settingsStatus"></span></div>
+        <div class="panel settings-card"><h2>البيانات والخصوصية</h2><p class="muted">بيانات المهام والإعدادات محفوظة محليًا على جهازك.</p><div class="privacy-row"><span>تخزين المهام والإعدادات</span><strong>محلي</strong></div><div class="privacy-row"><span>ملفات PDF</span><strong>IndexedDB</strong></div><div class="privacy-row"><span>العمل دون إنترنت</span><strong>جزئي بعد أول زيارة</strong></div><button class="danger-btn" id="clearData">مسح جميع بيانات StudyFlow</button></div></div>
+      </section>
+      <footer class="footer"><span>صُنع لتنظيم أفكارك قبل وقتك.</span><span>StudyFlow © 2026</span></footer>
+    </main>
+  </div>
+
+  <dialog id="taskDialog" class="modal"><form id="taskForm" method="dialog"><div class="modal-heading"><div><p class="eyebrow">خطوة جديدة نحو هدفك</p><h2>إضافة مهمة</h2></div><button type="button" class="close-btn" id="closeDialog">×</button></div><label>اسم المهمة<input id="taskTitle" required maxlength="90" placeholder="مثال: مراجعة المحاضرة الثانية"></label><div class="form-row"><label>التاريخ<input id="taskDate" type="date" required></label><label>الوقت<input id="taskTime" type="time"></label></div><div class="form-row"><label>الأولوية<select id="taskPriority"><option value="medium">متوسطة</option><option value="high">عالية</option><option value="low">منخفضة</option></select></label><label>المدة (دقيقة)<input id="taskDuration" type="number" min="5" max="600" value="30"></label></div><label>ملاحظات<textarea id="taskNotes" rows="2" placeholder="تفاصيل إضافية (اختياري)"></textarea></label><button class="primary-btn full-btn" type="submit">حفظ المهمة</button></form></dialog>
+  <div class="toast" id="toast" role="status"></div>
+</body>
+</html>
