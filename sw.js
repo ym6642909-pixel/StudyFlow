@@ -1,7 +1,7 @@
-/* StudyFlow service worker — studyflow-v4
+/* StudyFlow service worker — studyflow-v5
    Network-first for pages, cache-first for hashed build assets.
    Clears every older studyflow cache so returning visitors get the new app. */
-const CACHE = 'studyflow-v4'
+const CACHE = 'studyflow-v5'
 
 self.addEventListener('install', () => {
   self.skipWaiting()
