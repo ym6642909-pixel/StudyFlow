@@ -4,6 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#111827" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="StudyFlow" />
+    <link rel="apple-touch-icon" href="/StudyFlow/assets/icon-180.png" />
     <meta name="description" content="StudyFlow - منصتك الذكية للدراسة وتنظيم الوقت" />
     <title>StudyFlow | منصتك الذكية للدراسة</title>
     <link rel="manifest" href="/StudyFlow/manifest.webmanifest" />
@@ -16,5 +21,29 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      (function () {
+        var deferredPrompt = null;
+        window.addEventListener("beforeinstallprompt", function (e) {
+          e.preventDefault();
+          deferredPrompt = e;
+          if (document.getElementById("sfInstallBtn")) return;
+          var b = document.createElement("button");
+          b.id = "sfInstallBtn";
+          b.textContent = "⬇ ثبّت التطبيق";
+          b.style.cssText = "position:fixed;bottom:18px;left:18px;z-index:99999;background:#6485f4;color:#fff;border:0;border-radius:14px;padding:11px 18px;font-family:Cairo,sans-serif;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.35);direction:rtl";
+          b.onclick = function () {
+            b.remove();
+            if (deferredPrompt) { deferredPrompt.prompt(); deferredPrompt = null; }
+          };
+          document.body.appendChild(b);
+          setTimeout(function () { if (b.parentNode) b.remove(); }, 45000);
+        });
+        window.addEventListener("appinstalled", function () {
+          var b = document.getElementById("sfInstallBtn");
+          if (b) b.remove();
+        });
+      })();
+    </script>
   </body>
 </html>
